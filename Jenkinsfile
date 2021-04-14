@@ -40,9 +40,14 @@ node {
   //    sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
   //    }
   //  }
-    stage('Build Docker Image') {
-        steps {
-            docker build -t java-services:2 -f Dockerfile
+    stage('Build1'){
+    steps{
+        dir('app1'){
+            script{
+                app = docker.build("cloud007/simple-spring")
+
         }
+        }
+    }
     }
 }
