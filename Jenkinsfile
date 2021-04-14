@@ -33,9 +33,9 @@ pipeline {
         # rm -rf ${IMAGE_NAME}.docker.tar.gz
         docker build \
           -t ${IMAGE_NAME}:${BUILD_NUMBER} \
-          --label "jenkins.build=${BUILD_NUMBER}" \
-          --label "jenkins.job_url=${JOB_URL}" \
-          --label "jenkins.build_url=${JOB_URL}${BUILD_NUMBER}/" \
+          #--label "jenkins.build=${BUILD_NUMBER}" \
+          #--label "jenkins.job_url=${JOB_URL}" \
+          #--label "jenkins.build_url=${JOB_URL}${BUILD_NUMBER}/" \
           .
         docker save -o ${IMAGE_NAME}.docker.tar ${IMAGE_NAME}:${BUILD_NUMBER}
         gzip ${IMAGE_NAME}.docker.tar
