@@ -34,7 +34,10 @@ node {
    echo 'Archiva el paquete el paquete generado en Jenkins'
    step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true])
 
-   stage('Build Docker Image') {
-        docker.build("${env.JOB_NAME}:${env.BUILD_NUMBER}")
+   stage('Make Container') {
+      steps {
+      sh "docker build -t snscaimito/ledger-service:${env.BUILD_ID} ."
+      sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
+      }
     }
 }
