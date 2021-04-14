@@ -34,15 +34,15 @@ node {
    echo 'Archiva el paquete el paquete generado en Jenkins'
    step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true])
 
-   stage('Make Container') {
-      steps {
-      sh "docker build -t snscaimito/ledger-service:${env.BUILD_ID} ."
-      sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
-      }
-    }
+  //stage('Make Container') {
+  //    steps {
+  //    sh "docker build -t snscaimito/ledger-service:${env.BUILD_ID} ."
+  //    sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
+  //    }
+  //  }
     stage('Build Docker Image') {
         steps {
-            docker build -t testecr/java-services:2 -f Dockerfile
+            docker build -t 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app/java-services:2 -f Dockerfile
         }
     }
 }
