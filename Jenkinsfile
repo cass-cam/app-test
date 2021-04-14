@@ -1,106 +1,80 @@
-node {
-//    def gradle = tool name: 'Gradle-5.5', type: 'gradle'
-    parameters {
-        gitParameter name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'main'
-     }
-    withEnv([
-        'REPO_URL=https://github.com/cass-cam/app-test.git'
-        ]) {
-            if(env.JOB_BASE_NAME.contains("test-job")) {
-                stage('Git Checkout') {
-                    checkout changelog: false, 
-                    poll: false,
-                    scm: [
-                        $class: 'GitSCM',
-                        branches: [[name: "${params.BRANCH}"]],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [
-                            [$class: 'CleanBeforeCheckout'],
-                        ],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [
-                            [
-                                url: "${env.REPO_URL}"
-                            ]
-                        ]
-                    ]
-                }
-                dir('IST000-3/Back-End/BackendPortal') {
-                    stage('Build Docker image') {
-                        sh label: '', script: 'sudo docker build -t gcr.io/podmaturity/backendportal-ssl . '
-                    }
-                    //stage('Push Docker image') {
-                    //    sh label: '', script: 'sudo docker push gcr.io/podmaturity/backendportal-ssl:latest'
-                    //}
-                    // stage('Update Environment') {
-                    //     // sh label: '', script: 'gcloud compute instances update-container dev-podmaturity-bkn-portal-w-ssl --container-image gcr.io/podmaturity/backendportal:latest'
-                    // }
-                }
-                // stage('Unit Tests') {
-                //     // todo - alll
-                // }
-        }
-}
-}
+pipeline {
+  options {
+    buildDiscarder(
+      logRotator(
+        numToKeepStr: '5',
+        artifactNumToKeepStr: '3'
+      )
+    )
+  }
+  agent any
+  environment {
+    IMAGE_NAME = "test-image"
+  }
+  //For external GitHub, uncomment this. For internal, give Jenkins admin access on the repo for hooks
+  // triggers {
+  //  //pollSCM('H/1 * * * *')
+  //  //pollSCM('* * * * *')
+  // }
+  stages {
+    // =================================================================================
+    // BUILD IMAGE FROM DOCKERFILE
+    // =================================================================================
+    stage('build') {
+      //when {
+        //not {
+          //expression { BRANCH_NAME ==~ /^(qa|release)$/ }
+        //  expression { BRANCH_NAME ==~ /sw-latam-dev-env / }
+        //}
+      //}
+      steps {
+        sh """
+        # Clean up any old image archive files
+        # rm -rf ${IMAGE_NAME}.docker.tar.gz
+        docker build \
+          -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+          --label "jenkins.build=${BUILD_NUMBER}" \
+          --label "jenkins.job_url=${JOB_URL}" \
+          --label "jenkins.build_url=${JOB_URL}${BUILD_NUMBER}/" \
+          .
+        docker save -o ${IMAGE_NAME}.docker.tar ${IMAGE_NAME}:${BUILD_NUMBER}
+        gzip ${IMAGE_NAME}.docker.tar
+        """
+
+        archiveArtifacts artifacts: "${IMAGE_NAME}.docker.tar.gz", fingerprint: true
+
+      }
+    }
+    //stage('Artifact Upload'){
+    //  steps{
+    //    sh """
+    //    aws ecr get-login-password --region us-east-1 \
+    //    | docker login --username AWS --password-stdin 197079866228.dkr.ecr.us-east-1.amazonaws.com
+    //    docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 197079866228.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
+    //    docker push 197079866228.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
+    //    """
+    //  }
 
 
-//pipeline {
-//    agent {
-//        docker {
-//            image 'node:10-alpine'
-//            args '-p 3000:3000'
-//        }
-//    }
-//    environment {
-//        CI = 'true'
-//    }
-//    stages {
-//        stage('Build') {
-//            steps {
-//                sh 'npm install'
-//            }
-//        }
-//        stage('Test') {
-//            steps {
-//                sh './jenkins/scripts/test.sh'
-//            }
-//        }
-//        stage('Deliver') {
-//            steps {
-//                sh './jenkins/scripts/deliver.sh'
-//                input message: 'Finished using the web site? (Click "Proceed" to continue)?'
-//                sh './jenkins/scripts/kill.sh'
-//            }
-//        }
-//    }
-//}
-//
-//
-//pipeline {
-//  options {
-//    buildDiscarder(
-//      logRotator(
-//        numToKeepStr: '5',
-//        artifactNumToKeepStr: '3'
-//      )
-//    )
-//  }
-//  agent any
-//  environment {
-//    IMAGE_NAME = "sw_latam_app_dev"
-//  }
-//  stages {
-//      stage('build') {
-//          steps {
-//        sh """
-//        # Clean up any old image archive files
-//        rm -rf ${IMAGE_NAME}.docker.tar.gz
-//        docker build marco/irock:1.0-snap .
-//        """
-//
-//        archiveArtifacts artifacts: "${IMAGE_NAME}.docker.tar.gz", fingerprint: true
-//
-//      }
-//    }
-//  }
-//}
+    }
+    //stage('Deploying To Dev ENV'){
+    //  steps{
+    //    sh """
+    //    export IMAGE_VERSION=${IMAGE_NAME}.${BUILD_NUMBER}
+    //    /usr/local/bin/ecs-cli compose --project-name Dev_deploy --file ci/docker-compose.yml --ecs-params ci/ecs-params.yml -c Cluster-dev up --launch-type EC2
+    //    aws ecs update-service --cluster Cluster-dev --service service-dev --task-definition Dev_deploy
+    //    docker image ls | grep -v 4b0bbb0e6e32 | awk '{print "docker image rm -f "  \$3}'| sh
+    //    aws ecr describe-images --repository-name app  --query 'sort_by(imageDetails,& imagePushedAt)[*].imageTags[0]' --output json | head -n 1 | sed 1d | sed 's/^[ ^t"]*//' | sed 's/[ ^",]*\$//' | awk '{print "aws ecr batch-delete-image --repository-name app --image-ids imageTag=" \$1}' | sh
+    //    """
+    //  }
+    //}
+    // stage('Updating ECR list'){
+    //  steps{
+    //    sh"""
+    //    source /var/lib/jenkins/pythonvenv/ECRworkspace_Dev/bin/activate
+    //    python /var/lib/jenkins/pythonvenv/ECR_list.py
+    //    """
+    //  }
+    //}
+  }
+}
