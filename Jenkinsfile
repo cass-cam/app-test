@@ -40,14 +40,7 @@ node {
   //    sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
   //    }
   //  }
-    stage('Build1'){
-    steps{
-        dir('app1'){
-            script{
-                app = docker.build("cloud007/simple-spring")
+    stage 'Build1' 
+    sh 'docker build -t marco/irock:1.0-snap .'
 
-        }
-        }
-    }
-    }
 }
