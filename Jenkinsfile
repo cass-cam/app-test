@@ -42,7 +42,7 @@ node {
   //  }
     stage('Build Docker Image') {
         steps {
-            docker build -t 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app/java-services:2 -f Dockerfile
+            docker build -t java-services:2 -f Dockerfile
         }
     }
 }
