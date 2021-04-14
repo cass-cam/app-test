@@ -1,58 +1,17 @@
-pipeline {
-   agent {
-      label "default"
-   }
-   stages {
-      stage('Checkout') {
-         steps {
-            script {
-               git url: 'https://github.com/cass-cam/app-test.git'
-            }
-         }
-      }
-      stage('Build') {
-         agent {
-            label "maven"
-         }
-         steps {
-            sh 'mvn clean compile'
-         }
-      }
-      stage('Test') {
-         agent {
-            label "maven"
-         }
-         steps {
-            sh 'mvn test'
-         }
-      }
-      stage('Image') {
-         agent {
-            label "maven"
-         }
-         steps {
-            sh 'mvn -P jib -Djib.to.auth.username=${DOCKER_LOGIN} -Djib.to.auth.password=${DOCKER_PASSWORD} compile jib:build'
-         }
-      }
-      stage('Deploy on test') {
-         steps {
-            script {
-               env.PIPELINE_NAMESPACE = "test"
-               kubernetesDeploy kubeconfigId: 'docker-desktop', configs: 'k8s/deployment-template.yaml'
-            }
-         }
-      }
-      stage('Deploy on prod') {
-         steps {
-            script {
-               env.PIPELINE_NAMESPACE = "prod"
-               kubernetesDeploy kubeconfigId: 'docker-desktop', configs: 'k8s/deployment-template.yaml'
-            }
-         }
-      }
-   }
+node {
+    checkout scm
+    stage('Build Maven') {
+        docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+            sh './scripts/build-maven.sh'
+        }
+    }
+    stage('Build Docker Image') {
+        docker.build("${env.JOB_NAME}:${env.BUILD_NUMBER}")
+    }
+    stage('Push to AWS'){
+        sh "./scripts/aws-ecr-push.sh ${env.JOB_NAME}:${env.BUILD_NUMBER} /home/.aws/credentials"
+    }
 }
-
 
 //node {
 //   // ------------------------------------
@@ -90,7 +49,10 @@ pipeline {
 //   echo 'Archiva el paquete el paquete generado en Jenkins'
 //   step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true])
 //
-//   steps {
-//            sh 'mvn -Ddocker.skip=false -Ddocker.host=unix:///var/run/docker.sock docker:build' //example of how to build docker image with pom.xml and fabric8 plugin
-//        }
+//   stage('Make Container') {
+//      steps {
+//      sh "docker build -t snscaimito/ledger-service:${env.BUILD_ID} ."
+//      sh "docker tag snscaimito/ledger-service:${env.BUILD_ID} snscaimito/ledger-service:latest"
+//      }
+//    }
 //}
