@@ -7,10 +7,10 @@ node {
       } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
     }
 
-    stage('Build Docker Image') {
-        docker.build("${env.JOB_NAME}:${env.BUILD_NUMBER}")
-    }
-    stage('Push to AWS'){
-        sh "./scripts/aws-ecr-push.sh ${env.JOB_NAME}:${env.BUILD_NUMBER} /home/.aws/credentials"
-    }
+    //stage('Build Docker Image') {
+      //  docker.build("${env.JOB_NAME}:${env.BUILD_NUMBER}")
+    //}
+    //stage('Push to AWS'){
+      //  sh "./scripts/aws-ecr-push.sh ${env.JOB_NAME}:${env.BUILD_NUMBER} /home/.aws/credentials"
+    //}
 }
