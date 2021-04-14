@@ -1,4 +1,4 @@
-node('master') {
+node {
 //    def gradle = tool name: 'Gradle-5.5', type: 'gradle'
     parameters {
         gitParameter name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'main'
