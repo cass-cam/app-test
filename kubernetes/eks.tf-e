@@ -4,7 +4,7 @@ module "eks-cluster" {
 
   cluster_name                          = "test-app"
   cluster_version                       = 1.17
-  subnets                               = ["subnet-094e45046cc6418f6", "subnet-0297f7d6e0bf5ce1a", "subnet-00255d0f56a619ae3", "subnet-06025704123cc955b", "subnet-096d3ca72c63ece4d", "subnet-0c3281f4e7f4a05d8"]
+  subnets                               = ["subnet-094e45046cc6418f6", "subnet-0297f7d6e0bf5ce1a", "subnet-00255d0f56a619ae3", "subnet-06025704123cc955b", "subnet-096d3ca72c63ece4d", "subnet-0c8455ee1ec35eac"]
   vpc_id                                = "vpc-01fc85c2d12a2e0b0"
   cluster_endpoint_public_access        = true
   cluster_endpoint_public_access_cidrs  = ["0.0.0.0/0"]
