@@ -51,8 +51,7 @@ pipeline {
         export IMAGE_VERSION=${IMAGE_NAME}.${BUILD_NUMBER}
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl" 
         chmod u+x ./kubectl
-        ./kubectl create -f app.yaml
-        sleep 10
+        ./kubectl create -f ./app.yaml 2>/dev/null
         ./kubectl --record deployment.apps/my-deployment set image deployment.v1.apps/my-deployment app=264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
         """
       }
