@@ -42,7 +42,6 @@ pipeline {
         """
       }
     }
-    }
     steps{
       
       sh """
@@ -54,6 +53,7 @@ pipeline {
       ./kubectl --record deployment.apps/my-deployment set image deployment.v1.apps/my-deployment app=264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
       """
     }
+}
 }
 
 
