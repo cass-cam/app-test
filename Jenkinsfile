@@ -19,7 +19,7 @@ pipeline {
       steps {
         sh """
         # Clean up any old image archive files
-        # rm -rf ${IMAGE_NAME}.docker.tar.gz
+        rm -rf ${IMAGE_NAME}.docker.tar.gz
         docker build \
           -t ${IMAGE_NAME}:${BUILD_NUMBER} .
         docker save -o ${IMAGE_NAME}.docker.tar ${IMAGE_NAME}:${BUILD_NUMBER}
