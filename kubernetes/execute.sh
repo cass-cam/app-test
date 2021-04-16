@@ -1,4 +1,4 @@
-id=`aws ec2 describe-vpcs | grep test-vpc -B 22 | grep VpcId | sed 's/^[ \t]*"VpcId": "//' | sed 's/",//'`
+id=`aws ec2 describe-vpcs | grep test-app-vpc -B 22 | grep VpcId | sed 's/^[ \t]*"VpcId": "//' | sed 's/",//'`
 #aws ec2 create-security-group --region us-east-1 --group-name SG-jenkins-pv --description "Amazon EFS for EKS, SG for mount target" --vpc-id $id
 sg=`aws ec2 describe-security-groups | grep SG-jenkins-pv -A 20 | grep GroupId | sed 's/^[ \t]*"GroupId": "//' | sed 's/",//'`
 sga=`aws ec2 describe-security-groups | grep all_worker_management -A 25 | grep GroupId | sed 's/^[ \t]*"GroupId": "//g' | sed 's/",//g'`
