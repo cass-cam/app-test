@@ -8,7 +8,7 @@ pipeline {
     )
   }
   agent none {
-      node {master}
+      node { kubernetes }
      
   }
   environment {
