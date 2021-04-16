@@ -11,22 +11,11 @@ pipeline {
   environment {
     IMAGE_NAME = "test-image"
   }
-  //For external GitHub, uncomment this. For internal, give Jenkins admin access on the repo for hooks
-  // triggers {
-  //  //pollSCM('H/1 * * * *')
-  //  //pollSCM('* * * * *')
-  // }
   stages {
     // =================================================================================
     // BUILD IMAGE FROM DOCKERFILE
     // =================================================================================
     stage('build') {
-      //when {
-        //not {
-          //expression { BRANCH_NAME ==~ /^(qa|release)$/ }
-        //  expression { BRANCH_NAME ==~ /sw-latam-dev-env / }
-        //}
-      //}
       steps {
         sh """
         # Clean up any old image archive files
@@ -41,15 +30,15 @@ pipeline {
 
       }
     }
-    //stage('Artifact Upload'){
-    //  steps{
-    //    sh """
-    //    aws ecr get-login-password --region us-east-1 \
-    //    | docker login --username AWS --password-stdin 197079866228.dkr.ecr.us-east-1.amazonaws.com
-    //    docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 197079866228.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
-    //    docker push 197079866228.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
-    //    """
-    //  }
+    stage('Artifact Upload'){
+      steps{
+        sh """
+        aws ecr get-login-password --region us-east-1 \
+        | docker login --username AWS --password-stdin 264576910958.dkr.ecr.us-east-1.amazonaws.com
+        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
+        docker push 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
+        """
+      }
 
 
     }
