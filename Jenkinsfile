@@ -35,8 +35,8 @@ pipeline {
         sh """
         aws ecr get-login-password --region us-east-1 \
         | docker login --username AWS --password-stdin 264576910958.dkr.ecr.us-east-1.amazonaws.com 2>/dev/null
-        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 264576910958.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
-        docker push 264576910958.dkr.ecr.us-east-1.amazonaws.com/app:${IMAGE_NAME}.${BUILD_NUMBER}
+        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
+        docker push 264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
         """
       }
     }
