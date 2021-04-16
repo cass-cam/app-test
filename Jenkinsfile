@@ -51,14 +51,13 @@ pipeline {
         """
       }
     }
-     stage('Updating ECR list'){
-      steps{
-        sh"""
-        source /var/lib/jenkins/pythonvenv/ECRworkspace_Dev/bin/activate
-        python /var/lib/jenkins/pythonvenv/ECR_list.py
-        """
-      }
-    }
-  //}
-}
+     //stage('Updating ECR list'){
+     // steps{
+     //   sh"""
+     //   source /var/lib/jenkins/pythonvenv/ECRworkspace_Dev/bin/activate
+     //   python /var/lib/jenkins/pythonvenv/ECR_list.py
+     //   """
+     // }
+    //}
+  }
 }
