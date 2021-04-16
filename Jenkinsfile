@@ -7,7 +7,7 @@ pipeline {
       )
     )
   }
-  agent none 
+  
   environment {
     IMAGE_NAME = "test-image"
     JOB_NAME = "${JOB_NAME}".replace("-deploy", "")
