@@ -51,7 +51,7 @@ pipeline {
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl" 
         chmod u+x ./kubectl
         ./kubectl get all | grep my-service
-        if [ "\$?" -eq "0" ]; then echo app is running; else ./kubectl create -f ./app.yaml; fi
+        if [ "\$?" -eq "0" ]; then echo app is running; else ./kubectl create -f app.yaml; fi
         ./kubectl --record deployment.apps/my-deployment set image deployment.v1.apps/my-deployment app=264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}
         """
       }
