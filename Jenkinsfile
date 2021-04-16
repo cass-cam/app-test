@@ -45,7 +45,7 @@ pipeline {
     }
     steps{
       
-      #sh """
+      sh """
       aws eks update-kubeconfig --region us-east-1 --name test-app
       export AWS_PROFILE=default
       export IMAGE_VERSION=${IMAGE_NAME}.${BUILD_NUMBER}
