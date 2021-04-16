@@ -42,14 +42,48 @@ pipeline {
         """
       }
     }
-    stage('Deploying To Dev ENV'){
-      steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'k8s-default-namespace-config-id',
-                    configs: 'app.yml',
-                    enableConfigSubstitution: true
-                )
+    stage('Deploy on Dev') {
+    node('master'){
+        withEnv(["KUBECONFIG=${JENKINS_HOME}/.kube/dev-config","IMAGE=264576910958.dkr.ecr.us-east-1.amazonaws.com/test-app:${IMAGE_NAME}.${BUILD_NUMBER}"]){
+            sh "sed -i 's|IMAGE|${IMAGE}|g' k8s/deployment.yaml"
+            sh "sed -i 's|ACCOUNT|264576910958|g' k8s/service.yaml"
+            sh "sed -i 's|ENVIRONMENT|dev|g' k8s/*.yaml"
+            sh "sed -i 's|BUILD_NUMBER|01|g' k8s/*.yaml"
+            sh "kubectl apply -f k8s"
+            DEPLOYMENT = sh (
+                script: 'cat k8s/deployment.yaml | yq -r .metadata.name',
+                returnStdout: true
+            ).trim()
+            echo "Creating k8s resources..."
+            sleep 180
+            DESIRED= sh (
+                script: "kubectl get deployment/$DEPLOYMENT | awk '{print \$2}' | grep -v DESIRED",
+                returnStdout: true
+            ).trim()
+            CURRENT= sh (
+                script: "kubectl get deployment/$DEPLOYMENT | awk '{print \$3}' | grep -v CURRENT",
+                returnStdout: true
+            ).trim()
+            if (DESIRED.equals(CURRENT)) {
+                currentBuild.result = "SUCCESS"
+                return
+            } else {
+                error("Deployment Unsuccessful.")
+                currentBuild.result = "FAILURE"
+                return
             }
+        }
+    }
+  }
+}
+    //stage('Deploying To Dev ENV'){
+    //  steps {
+    //            kubernetesDeploy(
+    //                kubeconfigId: 'k8s-default-namespace-config-id',
+    //                configs: 'app.yml',
+    //                enableConfigSubstitution: true
+    //            )
+    //        }
       
       //steps{
       //  
@@ -65,5 +99,5 @@ pipeline {
       //  #"""
       //}
     }
-  }
-}
+  //}
+//}
