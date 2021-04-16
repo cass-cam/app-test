@@ -2,7 +2,7 @@
 
 variable "project_name" {
 type = string
-default = "adidas-app"
+default = "test-app"
 }
 
 #nombre con el que se va a crear el cluster 

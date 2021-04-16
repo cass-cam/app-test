@@ -4,8 +4,8 @@ module "eks-cluster" {
 
   cluster_name                          = "test-app"
   cluster_version                       = 1.17
-  subnets                               = ["subnet-08a920fcbc2b575f9", "subnet-07ab4601e1df3df18", "subnet-0da4210f25b3a392b", "subnet-03ae36b967c40e423", "subnet-0a94224dfb7f11919", "subnet-0c8455ee1ec35eac8"]
-  vpc_id                                = "vpc-08c89938b596b1fa4"
+  subnets                               = ["subnet-08a920fcbc2b575f", "subnet-07ab4601e1df3df1", "subnet-0da4210f25b3a392", "subnet-03ae36b967c40e42", "subnet-0a94224dfb7f1191", "subnet-0c8455ee1ec35eac"]
+  vpc_id                                = "vpc-08c89938b596b1fa1"
   cluster_endpoint_public_access        = true
   cluster_endpoint_public_access_cidrs  = ["0.0.0.0/0"]
   cluster_endpoint_private_access       = true
@@ -19,17 +19,17 @@ module "eks-cluster" {
   "arn:aws:iam::264576910958:policy/eks_cluster_autoscaler",
   "arn:aws:iam::264576910958:policy/alb-ingress-controller"
 ]
-  worker_additional_security_group_ids  = ["sg-0bfa4b8e8b945a868", "sg-02224b17a5f84a6dd", "sg-0d081b77e564cf250"]
+  worker_additional_security_group_ids  = ["sg-0bfa4b8e8b945a86", "sg-02224b17a5f84a6d", "sg-0d081b77e564cf25"]
   map_roles = [
   {
-    rolearn  = "arn:aws:iam::264576910958:role/adsoft"
+    rolearn  = "arn:aws:iam::26457691095:role/adsoft"
     username = "Admins"
     groups   = ["system:masters"]
   },
 ]
   map_users = [
   {
-    userarn  = "arn:aws:iam::264576910958:user/aeciopires"
+    userarn  = "arn:aws:iam::26457691095:user/aeciopires"
     username = "aeciopires"
     groups   = ["system:masters"]
   },
@@ -56,4 +56,12 @@ kubeconfig_aws_authenticator_command         = "aws"
     AWS_DEFAULT_REGION = "us-east-1"
   }
 
+}
+resource "aws_ecr_repository" "app-test-ecr" {
+  name                 = "app-test-ecr"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
