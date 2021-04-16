@@ -1,19 +1,18 @@
-Readme.
+# **CI/CD EKS Jenkins Terraform**
 
-En este deploy se va a realizar la creacion de una VPC (test-vpc) con sus respectivas subnets para la ejecucion de un cluster kubernetes bajo EKS de AWS, con 
-despliegue a cargo de jenkins en el cual se creara un job el cual validara el repositorio cada minuto en busca de cambios en el codigo; en caso de encontrarlos
-se realizara un despliegue por pipeline al cluster EKS creado.
+En este deploy se va a realizar la creacion de una VPC (test-vpc) con sus respectivas subnets para la ejecucion de un cluster kubernetes bajo EKS de AWS, con despliegue a cargo de jenkins en el cual se creara un job el cual validara el repositorio cada minuto en busca de cambios en el codigo; en caso de encontrarlos se realizara un despliegue por pipeline al cluster EKS creado.
 
-#######  Prerequisitos para la ejecucion de los siguientes archivos 
+## **Prerequisitos para la ejecucion de los siguientes archivos**
 
-Tener una cuenta de AWS y el usuario debe tener permisos para crear servicios de AWS. Para el despliegue de todo el terraform se asume que
-las llaves de acceso a la cuenta se encuentran configuradas en la ruta ~/.aws/credentials de la siguiente manera:
+Tener una cuenta de AWS y el usuario debe tener permisos para crear servicios de AWS. Para el despliegue de todo el terraform se asume que las llaves de acceso a la cuenta se encuentran configuradas en la ruta ~/.aws/credentials de la siguiente manera:
 
+```
 [default]
 aws_access_key_id = XXXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXX
+```
 
-######## Creacion de VPC y EKS por terraform
+## **Creacion de VPC y EKS por terraform**
 
 Con el siguiente codigo se creara una VPC con con 3 subnet privadas y 3 subnets publicas las cuales se usaran para el uso del cluster de kubernetes.
 
@@ -25,7 +24,7 @@ Para la ejecucion del archivo de terraform se deben realizar los siguientes paso
 4. ejecutar terraform apply
 5. todo se debe crear desde que el usuario tenga los permisos de administracion.
 
-######## Creacion cluster EKS
+## **Creacion cluster EKS**
 
 Con el siguiente codigo se creara el cluster EKS en AWS
 
@@ -38,7 +37,7 @@ modificar el archivo eks.tf. Para poder realizar bien el llamado de las variable
 4. ejecutar terraform apply
 5. ejecutar el comando "mv eks.bk eks.tf"
 
-######## Despliegue de ASG para instancias con jenkins
+## **Despliegue de ASG para instancias con jenkins**
 
 con el siguiente codigo se creara un ASG para la ejecucion del jenkins
 
@@ -49,7 +48,7 @@ ir a la raiz del repositorio y ejecutar los siguientes comandos:
 3. ejecutar terraform apply
 
 
-####### Configuracion del jenkins
+## **Configuracion del jenkins**
 
 Para la configuracion del job de jenkins realizar los siguientes pasos:
 
