@@ -7,3 +7,7 @@ subpub2=`aws ec2 describe-subnets --filters "Name=vpc-id,Values=$id" | grep test
 sed -i -e s/subpub1/$subpub1/g alb.tf
 sed -i -e s/subpub2/$subpub2/g alb.tf
 sed -i -e s/vpc-id/$id/g alb.tf
+privsub1=`aws ec2 describe-subnets --filters "Name=vpc-id,Values=$id" | grep test-app-vpc-private-us-east-1a -B 20 | grep SubnetId | sed 's/^[ \t]*"SubnetId": "//g' | sed 's/",//g'`
+privsub2=`aws ec2 describe-subnets --filters "Name=vpc-id,Values=$id" | grep test-app-vpc-private-us-east-1b -B 20 | grep SubnetId | sed 's/^[ \t]*"SubnetId": "//g' | sed 's/",//g'`
+sed -i -e s/privsub1/$privsub1/g ec2-ASG.tf
+sed -i -e s/privsub2/$privsub2/g ec2-ASG.tf
