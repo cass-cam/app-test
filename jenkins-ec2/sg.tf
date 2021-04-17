@@ -1,6 +1,6 @@
 resource "aws_security_group" "SG_app" {
   name   = "SG_app"
-  vpc_id = "vpc-08c89938b596b1fa4"
+  vpc_id = "vpc-id"
   ingress {
     from_port   = 0
     to_port     = 0
