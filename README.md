@@ -58,15 +58,15 @@ Para la configuracion del job de jenkins realizar los siguientes pasos:
 3. seleccionar la instancia y dar clic en el boton "Connect"
 4. seleccionar la pestaña "Session Manager" y darle clic al boton "Connect"
 5. Esperar a que se realice la instalacion de los paquetes necesarios para el jenkins, para esto validar con el siguiente comando:
-6. service jenkins status
+6. sudo service jenkins status
 7. Esperar a que el servicio se encuentre en estado "Running"
-8. ejecutar el comando cat /var/lib/jenkins/secrets/initialAdminPassword y copiar el resultado (este es el password para acceder a Jenkins)
+8. ejecutar el comando sudo cat /var/lib/jenkins/secrets/initialAdminPassword y copiar el resultado (este es el password para acceder a Jenkins)
 9. Ir a la cuenta de AWS y en el servicio de EC2 y a "Load Balancers"
 10. seleccionar el balanceador con nombre "alb-app" y copiar el "DNS name" de este.
-11. ir a un navegar y copiar el "DNS name" asi http://"DNS name"/login
+11. ir a un navegar y copiar el "DNS name" asi http://"DNS name":8080/login
 12. Jenkins va a solicitar la contraseña que se tomo en el punto 8
 13. seleccionar la instalacion de paquetes predefinidos el que se encuentra a la izquierda de la pantalla
-14. esperar a que se termine la instalacion de paquetes
+14. esperar a que se termine la instalacion de paquetes; darle skip a la creacion de nuevo usuario y darle ok al uso del nombre del DNS entregado, darle ok y "Start using Jenkins" 
 15. regresar a la terminal del SSM a la instancia donde se tiene configurado el jenkins
 16. ejecutar el comando "sudo su -"
 17. ejecutar el comando "vi /etc/passwd"
