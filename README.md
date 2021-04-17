@@ -82,5 +82,7 @@ Para la configuracion del job de jenkins realizar los siguientes pasos:
 27. agregar el repo https://github.com/cass-cam/app-test.git en el "Repository URL"
 28. en el campo "Branch Specifier (blank for 'any')" poner */main
 29. en el "Script Path" poner "Jenkinsfile" y darle ok a la creacion
-30. ir nuevamente a donde se descargo el repo en la terminal y en la raiz de este ejecutar el comando "./execute2.sh"
+30. ir nuevamente a donde se descargo el repo en la terminal y en la raiz de este ejecutar el comando "./execute2.sh" este paso solo se debe ejecutar una vez
+31. ejecutarl el comando "./execute3.sh" este paso solo se debe ejecutar una vez
+32. realizar un git commit -am "comentarios" y un git push para que el repo tome por primera vez la configuracion del jenkins.
 31. ejecutar el job
