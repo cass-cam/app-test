@@ -44,8 +44,9 @@ con el siguiente codigo se creara un ASG para la ejecucion del jenkins
 ir a la raiz del repositorio y ejecutar los siguientes comandos:
 
 1. ir a la carpeta jenkins-ec2 "cd jenkins-ec2"
-2. ejecutar terraform init
-3. ejecutar terraform apply
+2. ejecutar el script execute.sh
+3. ejecutar terraform init
+4. ejecutar terraform apply
 
 
 ## **Configuracion del jenkins**
