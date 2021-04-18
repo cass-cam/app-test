@@ -11,7 +11,7 @@ Tener una cuenta de AWS y el usuario debe tener permisos para crear servicios de
 aws_access_key_id = XXXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXX
 ```
-### **NOTA: No modificar los archivos Jenkinsfile-original, kubernetes/eks.tf-original, jenkins-ec2/alb.tf-original, jenkins-ec2/ec2-ASG.tf-original, jenkins-ec2/sg.tf**
+### **NOTA: No modificar los archivos Jenkinsfile-original, kubernetes/eks.tf-original, jenkins-ec2/alb.tf-original, jenkins-ec2/ec2-ASG.tf-original, jenkins-ec2/sg.tf-original**
 
 ## **Creacion de VPC y EKS por terraform**
 
