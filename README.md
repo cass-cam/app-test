@@ -87,3 +87,4 @@ Para la configuracion del job de jenkins realizar los siguientes pasos:
 31. ejecutarl el comando "./execute3.sh" este paso solo se debe ejecutar una vez
 32. realizar un git commit -am "comentarios" y un git push para que el repo tome por primera vez la configuracion del jenkins.
 31. ejecutar el job
+32. regresar a la terminal del SSM a la instancia donde se tiene configurado el jenkins "ASG-app" y desde el usuario jenkins ejecutar el comando "kubectl get all | grep my-service", copiar el dns del balanceador y pegarlo en un explorador asi http://"DNS":8080
