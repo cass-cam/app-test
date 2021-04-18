@@ -11,6 +11,7 @@ Tener una cuenta de AWS y el usuario debe tener permisos para crear servicios de
 aws_access_key_id = XXXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXX
 ```
+### **NOTA: No modificar los archivos Jenkinsfile-original, kubernetes/eks.tf-original, jenkins-ec2/alb.tf-original, jenkins-ec2/ec2-ASG.tf-original, jenkins-ec2/sg.tf**
 
 ## **Creacion de VPC y EKS por terraform**
 
@@ -18,7 +19,7 @@ Con el siguiente codigo se creara una VPC con con 3 subnet privadas y 3 subnets 
 
 Para la ejecucion del archivo de terraform se deben realizar los siguientes pasos:
 
-1. Clonar el repositorio https://github.com/cass-cam/app-test.git
+1. Clonar el repositorio https://github.com/cass-cam/app-test.git y ejecutar el script ./first.sh
 2. ir a la carpeta terraform "cd terraform"
 3. ejecutar terraform init
 4. ejecutar terraform apply
