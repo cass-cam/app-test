@@ -18,8 +18,8 @@ sed -i -e s/sg-0bfa4b8e8b945a86/$sga/g eks.tf
 sed -i -e s/sg-02224b17a5f84a6d/$sg1/g eks.tf
 sed -i -e s/sg-0d081b77e564cf25/$sg2/g eks.tf
 sed -i -e s/subnet-08a920fcbc2b575f/$subpriv1/g eks.tf
-#sed -i -e s/subnet-07ab4601e1df3df1/$subpub1/g eks.tf
+sed -i -e s/subnet-07ab4601e1df3df1/$subpub1/g eks.tf
 sed -i -e s/subnet-0da4210f25b3a392/$subpriv2/g eks.tf
-#sed -i -e s/subnet-03ae36b967c40e42/$subpub2/g eks.tf
-#sed -i -e s/subnet-0a94224dfb7f1191/$subpriv3/g eks.tf
+sed -i -e s/subnet-03ae36b967c40e42/$subpub2/g eks.tf
+sed -i -e s/subnet-0a94224dfb7f1191/$subpriv3/g eks.tf
 sed -i -e s/subnet-0c8455ee1ec35eac/$subpub3/g eks.tf
