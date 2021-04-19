@@ -3,8 +3,8 @@ module "alb" {
   version            = "~> 5.0"
   name               = "alb-app"
   load_balancer_type = "application"
-  vpc_id             = "vpc-0cf6b6bdc98dd851a"
-  subnets            = ["subnet-0fa699c2b1efa0e96", "subnet-0a55b2293b35b51b5"]
+  vpc_id             = "vpc-id"
+  subnets            = ["subpub1", "subpub2"]
   security_groups    = [aws_security_group.SG_app.id]
   target_groups = [
     {

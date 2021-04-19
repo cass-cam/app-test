@@ -4,8 +4,8 @@ module "eks-cluster" {
 
   cluster_name                          = "test-app"
   cluster_version                       = 1.17
-  subnets                               = ["subnet-02e595671bdbd53f2", "subnet-0fa699c2b1efa0e96", "subnet-08897f88d7c268136", "subnet-0a55b2293b35b51b5", "subnet-09d9b9f1e3ca6a7a9", "subnet-0fca21dabff609a90"]
-  vpc_id                                = "vpc-0cf6b6bdc98dd851a"
+  subnets                               = ["subnet-08a920fcbc2b575f", "subnet-07ab4601e1df3df1", "subnet-0da4210f25b3a392", "subnet-03ae36b967c40e42", "subnet-0a94224dfb7f1191", "subnet-0c8455ee1ec35eac"]
+  vpc_id                                = "vpc-08c89938b596b1fa1"
   cluster_endpoint_public_access        = true
   cluster_endpoint_public_access_cidrs  = ["0.0.0.0/0"]
   cluster_endpoint_private_access       = true
@@ -16,20 +16,20 @@ module "eks-cluster" {
   "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
   "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess",
   "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess",
-  "arn:aws:iam::088190408337:policy/eks_cluster_autoscaler",
-  "arn:aws:iam::088190408337:policy/alb-ingress-controller"
+  "arn:aws:iam::26457691095:policy/eks_cluster_autoscaler",
+  "arn:aws:iam::26457691095:policy/alb-ingress-controller"
 ]
-  worker_additional_security_group_ids  = ["sg-094cb01259fb8351e", "sg-0a805f7c142c79a79", "sg-0bbeeda6a1e977924"]
+  worker_additional_security_group_ids  = ["sg-0bfa4b8e8b945a86", "sg-02224b17a5f84a6d", "sg-0d081b77e564cf25"]
   map_roles = [
   {
-    rolearn  = "arn:aws:iam::088190408337:role/adsoft"
+    rolearn  = "arn:aws:iam::26457691095:role/adsoft"
     username = "Admins"
     groups   = ["system:masters"]
   },
 ]
   map_users = [
   {
-    userarn  = "arn:aws:iam::088190408337:user/aeciopires"
+    userarn  = "arn:aws:iam::26457691095:user/aeciopires"
     username = "aeciopires"
     groups   = ["system:masters"]
   },

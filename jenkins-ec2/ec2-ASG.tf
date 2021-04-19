@@ -15,7 +15,7 @@ module "asg" {
 
   # Auto scaling group
   asg_name                  = "ASG-app"
-  vpc_zone_identifier       = ["subnet-02e595671bdbd53f2", "subnet-08897f88d7c268136"]
+  vpc_zone_identifier       = ["privsub1", "privsub2"]
   health_check_type         = "EC2"
   min_size                  = 1
   max_size                  = 1
