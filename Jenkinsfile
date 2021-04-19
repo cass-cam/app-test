@@ -37,9 +37,9 @@ pipeline {
       steps{
         sh """
         aws ecr get-login-password --region us-east-1 \
-        | docker login --username AWS --password-stdin 048551010528.dkr.ecr.us-east-1.amazonaws.com 2>/dev/null
-        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 048551010528.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
-        docker push 048551010528.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
+        | docker login --username AWS --password-stdin 088190408337.dkr.ecr.us-east-1.amazonaws.com 2>/dev/null
+        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} 088190408337.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
+        docker push 088190408337.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
         """
       }
     }
@@ -51,7 +51,7 @@ pipeline {
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl" 
         chmod u+x ./kubectl
         ./execute.sh
-        ./kubectl --record deployment.apps/my-deployment set image deployment.v1.apps/my-deployment app=048551010528.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
+        ./kubectl --record deployment.apps/my-deployment set image deployment.v1.apps/my-deployment app=088190408337.dkr.ecr.us-east-1.amazonaws.com/app-test-ecr:${IMAGE_NAME}.${BUILD_NUMBER}
         """
       }
     }
