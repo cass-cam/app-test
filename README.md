@@ -83,6 +83,6 @@ Para la configuracion del job de jenkins realizar los siguientes pasos:
 27. agregar el repo https://github.com/cass-cam/app-test.git en el "Repository URL"
 28. en el campo "Branch Specifier (blank for 'any')" poner */main
 29. en el "Script Path" poner "Jenkinsfile" y darle ok a la creacion
-30. ejecutarl el comando "./execute3.sh" este paso solo se debe ejecutar una vez
+30. ir nuevamente a donde se descargo el repo en la terminal y en la raiz de este ejecutarl el comando "./execute3.sh" este paso solo se debe ejecutar una vez
 31. ejecutar el job
 32. regresar a la terminal del SSM a la instancia donde se tiene configurado el jenkins "ASG-app" y desde el usuario jenkins ejecutar el comando "kubectl get all | grep my-service", copiar el dns del balanceador y pegarlo en un explorador asi http://"DNS":8080
