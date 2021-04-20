@@ -12,7 +12,7 @@ pipeline {
   environment {
     IMAGE_NAME = "test-image"
     JOB_NAME = "${JOB_NAME}".replace("-deploy", "")
-    ACCOUNT = sh (aws sts get-caller-identity --query Account --output text)
+    ACCOUNT = "${sh(script:'aws sts get-caller-identity --query Account --output text', returnStdout: true).trim()}"
         REGISTRY = "my-docker-registry"
   }
   stages {
