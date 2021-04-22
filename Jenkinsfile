@@ -47,7 +47,7 @@ pipeline {
     stage('Deploy to dev'){
       steps{
         sh """
-        aws eks update-kubeconfig --region us-east-1 --name my-cluster
+        aws eks update-kubeconfig --region us-east-1 --name test-app
         export IMAGE_VERSION=${IMAGE_NAME}.${BUILD_NUMBER}
         curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl" 
         chmod u+x ./kubectl
